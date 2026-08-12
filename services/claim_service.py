@@ -46,17 +46,21 @@ class ClaimService:
     def verify_claim(self, item, owner, date_claim):
         item = item.lower()
         now = datetime.now()
+        owner = owner.title()
         load_item = self.database.load_data()
 
-        if load_item[item]["date_found"] == date_claim:
-            load_item[item]["status"] = True 
-            load_item[item]["owner"] = owner
-            load_item[item]["d_return"] = now.strftime("%Y-%m-%d %H:%M:%S") 
-            self.database.save_item(load_item)
-            return {
-                "valid": True,
-                "message": "The claim is verified waiting for the final approval."
-            }
+        for key in load_item:
+            #Identifation for item to claim
+            if load_item[key]["item"] == item:
+                if load_item[key]["date_found"] == date_claim: #Date of lost    
+                    load_item[key]["status"] = True 
+                    load_item[key]["owner"] = owner
+                    load_item[key]["d_return"] = now.strftime("%Y-%m-%d %H:%M:%S") 
+                    self.database.save_item(load_item)
+                    return {
+                        "valid": True,
+                        "message": "The claim is verified waiting for the final approval."
+                    }
 
         return {
                 "valid": False,
@@ -78,26 +82,27 @@ class ClaimService:
 
     def check_claim_status(self, item):
         item_d = self.database.load_data()
-
-
+    
         #Validation
-        if item in item_d:
-            #Status Validation
-            if item_d[item]["status"] == False:
-                return {
-                    "valid": True,
-                    "message": "The Item is good. Proceeding."
-                }
+        for key in item_d:
+            if item_d[key]["item"] == item:
+                #Status Validation
+                if item_d[key]["status"] == False:
+                    return {
+                        "valid": True,
+                        "message": "The Item is good. Proceeding."
+                    }
 
-            else:
-                return {
-                    "valid": False,
-                    "message": "The Item is already been claimed."
+                else:
+                    return {
+                        "valid": False,
+                        "message": "The Item is already been claimed."
 
-                }
-        else:
-            return {
+                    }
+    
+        return {
                 "valid": False,
                 "message": "The Item cannot be found. Try again."
             }
-                
+
+

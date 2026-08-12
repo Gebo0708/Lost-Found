@@ -9,12 +9,14 @@ class Data_Management:
 
     def create_dict(self, item, date_found, founder, status, owner=None, d_found=None):
         item = item.lower()
-        data_dict = {item:{"date_found":date_found, "founder":founder, "status":status, "owner":owner, "d_return":d_found}}
+        founder = founder.title()
+        load_data = self.load_data()
+        id_n = len(load_data) + 1
+        data_dict = {id_n:{"item": item, "date_found":date_found, "founder":founder, "status":status, "owner":owner, "d_return":d_found}}
 
         return data_dict
 
     def save_data(self, item, date_found, founder, status, owner=None, d_found=None):
-        
         data_dict = self.create_dict(item, date_found, founder, status, owner, d_found)
 
         if os.path.exists(DATABASE_FILE):
@@ -35,5 +37,4 @@ class Data_Management:
         if os.path.exists(DATABASE_FILE):
             with open(DATABASE_FILE, "r") as file:
                 loaded_data = json.load(file)
-
                 return loaded_data
