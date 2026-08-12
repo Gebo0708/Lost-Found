@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/global.css') }}">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/success_page.css') }}">
+</head>
+
+<body>
+
+    <section class="success-container">
+
+        <div class="success-card">
+
+            <div class="checkmark">
+
+                ✓
+
+            </div>
+
+            <h1>{{ result }}</h1>
+
+            <p class="redirect-text">
+
+                You will be redirected to the Home Page in
+
+            </p>
+
+            <div id="timer">
+
+                5
+
+            </div>
+
+            <a href="{{ url_for('home') }}" class="btn-primary">
+
+                Return Now
+
+            </a>
+
+        </div>
+
+    </section>
+
+    <script>
+
+        let secondsLeft = 5;
+
+        const timer = document.getElementById("timer");
+
+        const homeUrl = "{{ url_for('home') }}";
+
+        const countdown = setInterval(() => {
+
+            secondsLeft--;
+
+            timer.textContent = secondsLeft;
+
+            if(secondsLeft <= 0){
+
+                clearInterval(countdown);
+
+                window.location.href = homeUrl;
+
+            }
+
+        },1000);
+
+    </script>
+
+</body>
+
+</html>

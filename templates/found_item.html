@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Lost Item</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/global.css') }}">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/found_item.css') }}">
+</head>
+
+<body>
+
+    <nav>
+
+        <h2 class="logo">School Lost & Found</h2>
+
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/lost_item">Report Item</a></li>
+            <li><a href="/search_item">Search Item</a></li>
+            <li><a href="/found_item" class="active">Claim Item</a></li>
+        </ul>
+
+    </nav>
+
+    <section class="claim-container">
+
+        <div class="claim-card">
+
+            <h1>Claim Your Lost Item</h1>
+
+            <p>
+                Enter your information below to verify ownership of the item.
+                Once verified, please proceed to the SSC Office.
+            </p>
+
+            <form action="/found_item" method="POST">
+
+                <div class="input-group">
+
+                    <label>Item Name</label>
+
+                    <input
+                        type="text"
+                        name="item"
+                        placeholder="Example: Wallet, ID, Umbrella"
+                        required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Your Name</label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Lastname, Firstname"
+                        required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Date Lost</label>
+
+                    <input
+                        type="date"
+                        name="trip-start"
+                        required>
+
+                </div>
+
+                <button
+                    class="btn-primary"
+                    type="submit">
+
+                    Submit Claim
+
+                </button>
+
+            </form>
+
+            {% if result %}
+
+            <div class="result-card">
+
+                {{ result }}
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

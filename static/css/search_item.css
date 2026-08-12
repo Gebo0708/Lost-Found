@@ -1,0 +1,97 @@
+/* ==========================
+        CONTAINER
+========================== */
+
+.search-container{
+
+    min-height:90vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#f8fafc;
+
+}
+
+/* ==========================
+          CARD
+========================== */
+
+.result-card{
+
+    width:650px;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:40px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    text-align:center;
+
+}
+
+.result-card h1{
+
+    color:#2563EB;
+
+    margin-bottom:30px;
+
+}
+
+/* ==========================
+        MESSAGE
+========================== */
+
+.message{
+
+    padding:20px;
+
+    border-radius:10px;
+
+    font-size:18px;
+
+    line-height:1.6;
+
+    margin-bottom:35px;
+
+}
+
+.success{
+
+    background:#ecfdf5;
+
+    color:#166534;
+
+    border-left:6px solid #22c55e;
+
+}
+
+.warning{
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+    border-left:6px solid #f59e0b;
+
+}
+
+/* ==========================
+        BUTTONS
+========================== */
+
+.button-group{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+}

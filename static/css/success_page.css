@@ -1,0 +1,127 @@
+/* ==========================
+        CONTAINER
+========================== */
+
+.success-container{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#f8fafc;
+
+}
+
+/* ==========================
+            CARD
+========================== */
+
+.success-card{
+
+    width:500px;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:50px;
+
+    text-align:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+/* ==========================
+        CHECK ICON
+========================== */
+
+.checkmark{
+
+    width:90px;
+
+    height:90px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    color:white;
+
+    font-size:50px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+/* ==========================
+        TEXT
+========================== */
+
+.success-card h1{
+
+    color:#2563EB;
+
+    margin-bottom:15px;
+
+}
+
+.result{
+
+    color:#555;
+
+    line-height:1.7;
+
+    margin-bottom:25px;
+
+}
+
+.redirect-text{
+
+    margin-bottom:15px;
+
+    color:#777;
+
+}
+
+/* ==========================
+        TIMER
+========================== */
+
+#timer{
+
+    font-size:48px;
+
+    font-weight:bold;
+
+    color:#2563EB;
+
+    margin-bottom:30px;
+
+}
+
+/* ==========================
+        BUTTON
+========================== */
+
+.success-card .btn-primary{
+
+    display:inline-block;
+
+    text-decoration:none;
+
+    padding:14px 35px;
+
+}

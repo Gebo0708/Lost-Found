@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Lost & Found</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/global.css') }}">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+
+<body>
+
+    <nav>
+
+        <h2 class="logo">School Lost & Found</h2>
+
+        <ul>
+            <li><a href="/" class="active">Home</a></li>
+            <li><a href="/lost_item">Report Item</a></li>
+            <li><a href="/search_item">Search Item</a></li>
+            <li><a href="/found_item">Claim Item</a></li>
+        </ul>
+
+    </nav>
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>Lost Something?</h1>
+
+            <h2>Let's Help You Find It.</h2>
+
+            <p>
+                Welcome to the School Lost & Found System. Report found items,
+                search for your belongings, and claim them safely through the
+                Student Services Office.
+            </p>
+
+            <form action="/handle-buttons" method="POST">
+
+                <div class="hero-buttons">
+
+                    <button
+                        class="btn-primary"
+                        name="action"
+                        value="lost_page">
+
+                        Report Item
+
+                    </button>
+
+                    <button
+                        class="btn-secondary"
+                        name="action"
+                        value="found_page">
+
+                        Claim Item
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+    <section class="features">
+
+        <div class="feature-card">
+
+            <h2>📦 Report</h2>
+
+            <p>
+                Quickly report any item you found around the campus.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h2>🔍 Search</h2>
+
+            <p>
+                Search whether your missing belongings have already been reported.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <h2>✅ Claim</h2>
+
+            <p>
+                Verify ownership and claim your belongings at the SSC Office.
+            </p>
+
+        </div>
+
+    </section>
+
+    <footer>
+
+        <p>
+            School Lost & Found System © 2026
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

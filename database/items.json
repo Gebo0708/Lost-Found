@@ -1,0 +1,65 @@
+{
+    "id": {
+        "date_found": "2026-08-03",
+        "founder": "reyes, gabriel",
+        "status": true,
+        "owner": "alcantara, angelique",
+        "d_return": "2026-08-03 19:59:49"
+    },
+    "bag": {
+        "date_found": "2026-08-02",
+        "founder": "reyes, gabriel",
+        "status": true,
+        "owner": "asdasd",
+        "d_return": "2026-08-12 16:09:30"
+    },
+    "shades": {
+        "date_found": "2026-08-02",
+        "founder": "reyes, gabriel",
+        "status": false,
+        "owner": null,
+        "d_return": null
+    },
+    "asdad": {
+        "date_found": "2026-08-02",
+        "founder": "asdasd",
+        "status": false,
+        "owner": null,
+        "d_return": null
+    },
+    "id card": {
+        "date_found": "2026-08-03",
+        "founder": "Reyes, Gabriel",
+        "status": false,
+        "owner": null,
+        "d_return": null
+    },
+    "wallet": {
+        "date_found": "2026-08-03",
+        "founder": "reyes, gabriel",
+        "status": true,
+        "owner": "reyes, gabriel",
+        "d_return": "2026-08-04 22:52:20"
+    },
+    "gab": {
+        "date_found": "2027-01-12",
+        "founder": "reyes, gabriel",
+        "status": false,
+        "owner": null,
+        "d_return": null
+    },
+    "dsfsdf": {
+        "date_found": "2027-05-12",
+        "founder": "sdfsdf",
+        "status": false,
+        "owner": null,
+        "d_return": null
+    },
+    "iuahsdahs": {
+        "date_found": "2027-01-12",
+        "founder": "asdiojasdo",
+        "status": false,
+        "owner": null,
+        "d_return": null
+    }
+}
