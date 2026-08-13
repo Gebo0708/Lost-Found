@@ -1,69 +1,24 @@
 {
     "1": {
         "item": "card",
-        "date_found": "2026-08-12",
+        "date_found": "2026-08-13",
         "founder": "Reyes, Gabriel",
         "status": true,
-        "owner": "Reyes, Gabriel",
-        "d_return": "2026-08-12 20:35:21"
+        "owner": "Asdasd",
+        "d_return": "2026-08-13 23:09:51",
+        "color": "green",
+        "size": "small",
+        "shape": "rectangle"
     },
     "2": {
-        "item": "keyboard",
-        "date_found": "2026-08-12",
-        "founder": "Reyes, Gabriel",
-        "status": true,
-        "owner": "Lyka",
-        "d_return": "2026-08-12 20:41:33"
-    },
-    "3": {
-        "item": "keyboard",
-        "date_found": "2026-08-12",
-        "founder": "Reyes, Gabriel",
-        "status": false,
-        "owner": null,
-        "d_return": null
-    },
-    "4": {
-        "item": "keycard",
-        "date_found": "2026-08-12",
-        "founder": "Reyes, Gabriel",
-        "status": true,
-        "owner": "Alcantara, Lyka",
-        "d_return": "2026-08-12 20:57:31"
-    },
-    "5": {
-        "item": "cellphone",
-        "date_found": "2026-08-12",
-        "founder": "Reyes, Gabriel",
-        "status": true,
-        "owner": "Asdasdasdadasd",
-        "d_return": "2026-08-12 23:00:49"
-    },
-    "6": {
-        "item": "gabasdaasd",
+        "item": "card",
         "date_found": "2026-08-13",
-        "founder": "Aasd",
-        "status": false,
-        "owner": null,
-        "d_return": null
-    },
-    "7": {
-        "item": "asdsa",
-        "date_found": "2026-08-11",
-        "founder": "Asdasd",
-        "status": false,
-        "owner": null,
-        "d_return": null
-    },
-    "8": {
-        "item": "bag",
-        "date_found": "2026-08-13",
-        "founder": "Reyes, Gabriel",
-        "status": false,
-        "owner": null,
-        "d_return": null,
-        "color": "Green",
-        "size": "Medium",
-        "shape": "Rectangle"
+        "founder": "Alcantara, Lyka",
+        "status": true,
+        "owner": "Asdasdasd",
+        "d_return": "2026-08-13 23:09:29",
+        "color": "red",
+        "size": "large",
+        "shape": "square"
     }
 }

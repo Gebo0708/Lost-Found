@@ -9,7 +9,7 @@ class ClaimService:
         self.validate = ValidationService()
         self.database = Data_Management()
 
-    def claim_item_service(self, item, owner, date_claim):
+    def claim_item_service(self, item, owner, date_claim, color, size, shape):
         #Validation 
         item_validation = self.validate.validate_item(item)
 
@@ -25,14 +25,18 @@ class ClaimService:
 
         if not date_validation["valid"]:
             return date_validation
+        
+        adj_validation = self.validate.validate_detail([color, size, shape])
 
+        if not adj_validation["valid"]:
+            return adj_validation
 
         #Check Item Status if Claimed or Not
         item_stat = self.check_claim_status(item)
 
         if item_stat["valid"]:
         #Verification
-            verify = self.verify_claim(item, owner, date_claim)
+            verify = self.verify_claim(item, owner, date_claim, color, size, shape)
 
             if verify["valid"]:
                 return self.approve_claim(item, owner)
@@ -43,16 +47,20 @@ class ClaimService:
             return item_stat
 
     
-    def verify_claim(self, item, owner, date_claim):
+    def verify_claim(self, item, owner, date_claim, color, size, shape):
         item = item.lower()
         now = datetime.now()
         owner = owner.title()
+        color = color.lower()
+        size = size.lower()
+        shape = shape.lower()
         load_item = self.database.load_data()
+
 
         for key in load_item:
             #Identifation for item to claim
             if load_item[key]["item"] == item:
-                if load_item[key]["date_found"] == date_claim: #Date of lost    
+                if load_item[key]["color"] == color and load_item[key]["size"] == size and load_item[key]["shape"] == shape:
                     load_item[key]["status"] = True 
                     load_item[key]["owner"] = owner
                     load_item[key]["d_return"] = now.strftime("%Y-%m-%d %H:%M:%S") 

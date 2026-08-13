@@ -10,7 +10,7 @@
             href="{{ url_for('static', filename='css/global.css') }}">
 
         <link rel="stylesheet"
-            href="{{ url_for('static', filename='css/details.css') }}">
+            href="{{ url_for('static', filename='css/details-claim.css') }}">
     </head>
 
     <body>
@@ -21,11 +21,11 @@
             <h1>ITEM DETAILS</h1>
 
             <p>
-                Found an item on campus? Fill out the form below so the rightful
-                owner can locate and claim it.
+                Lost an item on campus? Fill out the form below so you can
+                locate and claim it.
             </p>
 
-            <form action="/details" method="POST">
+            <form action="/details-claim" method="POST">
 
                 <div class="input-group">
 

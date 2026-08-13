@@ -1,5 +1,6 @@
 from models.admin import Admin
 from services.report_service import ReportService
+from services.claim_service import ClaimService
 from flask import Flask, render_template, request, redirect, url_for, session
 
 
@@ -41,14 +42,16 @@ def lost_item():
 
 @app.route('/found_item', methods=['GET', 'POST'])
 def found_item():
-    res = None
+    
     if request.method == "POST":
 
-        service = ReportService()
-
-        res = service.claim_item_service(request.form["item"], request.form["name"], request.form['trip-start'])
-    
-        return redirect(url_for("search_item", result=res["message"]))
+        session["found_item"] = {
+            "item": request.form["item"],
+            "name": request.form["name"],
+            "date": request.form["trip-start"]
+        }
+        
+        return redirect(url_for("details_claim"))
     return render_template("found_item.html")
 
 @app.route('/success_page')
@@ -90,6 +93,35 @@ def details():
 
     return render_template("details.html")
 
+
+@app.route("/details-claim", methods=["GET", "POST"])
+def details_claim():
+
+    if request.method == "POST":
+
+        found_item = session.get("found_item")
+        if not found_item:
+            return redirect(url_for("found_item"))
+
+        res = None
+        service = ClaimService()
+
+        res = service.claim_item_service(
+            found_item["item"], 
+            found_item["name"], 
+            found_item['date'],
+            request.form["color"],
+            request.form["size"],
+            request.form["shape"]
+            )
+        
+        session.pop("found_item", None)
+
+        return redirect(
+            url_for("search_item", result=res["message"])
+        )
+
+    return render_template("details-claim.html")
 if __name__ == '__main__':
     app.run(debug=True)
     
