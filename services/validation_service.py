@@ -14,7 +14,19 @@ class ValidationService:
         "valid": False,
         "message": "Invalid item."
     }
-            
+
+    def validate_detail(self, adjectives):
+        for adj in adjectives:
+            if adj != None:
+                if isinstance(adj, str):
+                    return {
+                        "valid": True,
+                        "message": "Valid Adjective"
+                    }
+        return {
+                    "valid": False,
+                    "message": "Invalid Adjective"
+                }
 
     def validate_name(self, name):
         if name != None:

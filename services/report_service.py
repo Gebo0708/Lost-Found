@@ -8,7 +8,7 @@ class ReportService:
     def __init__(self):
         self.validate = ValidationService()
 
-    def report_lost_item_service(self, item, founder, date_found):
+    def report_lost_item_service(self, item, founder, date_found, color, size, shape):
 
         item_validation = self.validate.validate_item(item)
 
@@ -32,7 +32,12 @@ class ReportService:
         if not dup_validation["valid"]:
             return dup_validation
 
-        ad.save_data(item, date_found, founder, False, None, None)
+        detail_validation = self.validate.validate_detail([color, size, shape])
+
+        if not detail_validation["valid"]:
+            return detail_validation
+
+        ad.save_data(item, date_found, founder, False, color, size, shape, None, None)
         
         return {
             "valid": True,

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Details</title>
+
+        <link rel="stylesheet"
+            href="{{ url_for('static', filename='css/global.css') }}">
+
+        <link rel="stylesheet"
+            href="{{ url_for('static', filename='css/details.css') }}">
+    </head>
+
+    <body>
+        <section class="report-container">
+
+        <div class="report-card">
+
+            <h1>Report a Found Item</h1>
+
+            <p>
+                Found an item on campus? Fill out the form below so the rightful
+                owner can locate and claim it.
+            </p>
+
+            <form action="/details" method="POST">
+
+                <div class="input-group">
+
+                    <label>Item Color</label>
+
+                    <input
+                        type="text"
+                        name="color"
+                        placeholder="Example: Wallet, ID Card, Umbrella"
+                        required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Item Size</label>
+
+                    <input
+                        type="text"
+                        name="size"
+                        placeholder="Lastname, Firstname"
+                        required>
+
+                </div>
+                
+                <div class="input-group">
+
+                    <label>Item Shape</label>
+
+                    <input
+                        type="text"
+                        name="shape"
+                        placeholder="Lastname, Firstname"
+                        required>
+
+                </div>
+
+                <button
+                    class="btn-primary"
+                    type="submit">
+
+                    Submit Report
+
+                </button>
+
+            </form>
+
+        </div>
+
+        </section>
+
+    </body>
+</html>
