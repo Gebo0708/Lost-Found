@@ -1,54 +1,70 @@
-import os
-import time
-from datetime import datetime
-import json
+import mysql.connector
 
-DATABASE_FILE = "database/items.json"
 
-class Data_Management:
+class Database:
 
-    def create_dict(self, item, date_found, founder, status,  color, size, shape, owner=None, d_found=None):
-        item = item.lower()
-        founder = founder.title()
-        color = color.lower()
-        size = size.lower()
-        shape = shape.lower()
-        load_data = self.load_data()
-        id_n = len(load_data) + 1
-        data_dict = {
-            id_n:
-            {"item": item, 
-            "date_found":date_found, 
-            "founder":founder, 
-            "status":status, "owner":owner, 
-            "d_return":d_found, 
-            "color": color,
-            "size": size,
-            "shape": shape
-            }
-        }
+    def __init__(self):
+        self.connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="YOUR_PASSWORD",
+            database="lost_found_db"
+        )
 
-        return data_dict
+    def get_connection(self):
+        return self.connection
 
-    def save_data(self, item, date_found, founder, status, color, size, shape, owner=None, d_found=None):
-        data_dict = self.create_dict(item, date_found, founder, status, color, size, shape, owner, d_found)
+# import os
+# import time
+# from datetime import datetime
+# import json
 
-        if os.path.exists(DATABASE_FILE):
-            with open(DATABASE_FILE, "r") as file:
-                load = json.load(file)
+# DATABASE_FILE = "database/items.json"
 
-            load.update(data_dict)
+# class Data_Management:
 
-            with open(DATABASE_FILE, "w") as file:
-                json.dump(load, file, indent=4)
+#     def create_dict(self, item, date_found, founder, status,  color, size, shape, owner=None, d_found=None):
+#         item = item.lower()
+#         founder = founder.title()
+#         color = color.lower()
+#         size = size.lower()
+#         shape = shape.lower()
+#         load_data = self.load_data()
+#         id_n = len(load_data) + 1
+#         data_dict = {
+#             id_n:
+#             {"item": item, 
+#             "date_found":date_found, 
+#             "founder":founder, 
+#             "status":status, "owner":owner, 
+#             "d_return":d_found, 
+#             "color": color,
+#             "size": size,
+#             "shape": shape
+#             }
+#         }
 
-    def save_item(self, data):
-        if os.path.exists(DATABASE_FILE):
-            with open(DATABASE_FILE, "w") as file:
-                json.dump(data, file, indent=4)
+#         return data_dict
 
-    def load_data(self):
-        if os.path.exists(DATABASE_FILE):
-            with open(DATABASE_FILE, "r") as file:
-                loaded_data = json.load(file)
-                return loaded_data
+#     def save_data(self, item, date_found, founder, status, color, size, shape, owner=None, d_found=None):
+#         data_dict = self.create_dict(item, date_found, founder, status, color, size, shape, owner, d_found)
+
+#         if os.path.exists(DATABASE_FILE):
+#             with open(DATABASE_FILE, "r") as file:
+#                 load = json.load(file)
+
+#             load.update(data_dict)
+
+#             with open(DATABASE_FILE, "w") as file:
+#                 json.dump(load, file, indent=4)
+
+#     def save_item(self, data):
+#         if os.path.exists(DATABASE_FILE):
+#             with open(DATABASE_FILE, "w") as file:
+#                 json.dump(data, file, indent=4)
+
+#     def load_data(self):
+#         if os.path.exists(DATABASE_FILE):
+#             with open(DATABASE_FILE, "r") as file:
+#                 loaded_data = json.load(file)
+#                 return loaded_data
