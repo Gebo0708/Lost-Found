@@ -1,18 +1,131 @@
 import mysql.connector
 
+class Data_Management:
 
-class Database:
-
-    def __init__(self):
-        self.connection = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="18_gabriel",
-            database="lost_found_db"
+    def connect(self):
+        connection = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='18_gabriel',
+            database='lost_found'
         )
 
-    def get_connection(self):
-        return self.connection
+        return connection
+    
+    
+    def update_report_status(self, report_id, status):
+        connection = self.connect()
+        cursor = connection.cursor()
+
+        sql = """UPDATE reports 
+        SET status = %s
+        WHERE report_id = %s"""
+
+        cursor.execute(sql, (status, report_id))
+
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+
+        print("Update Successfully.")
+
+    def load_reports(self):
+
+        connection = self.connect()
+        cursor = connection.cursor(dictionary=True)
+
+        cursor.execute("SELECT * FROM reports")
+
+        data = cursor.fetchall()
+
+        cursor.close()
+        connection.close()
+
+        return data
+
+    def save_report(self, item, founder, date_found, color, size, shape):
+        connection = self.connect()
+        cursor = connection.cursor()
+
+        sql = """
+            INSERT INTO reports 
+            (item, founder, date_found, color, size, shape)
+            VALUES
+            (%s, %s, %s, %s, %s, %s)
+        """
+
+        values = (
+            item, 
+            founder, 
+            date_found, 
+            color, 
+            size, 
+            shape
+        )
+
+        cursor.execute(sql, values)
+
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+
+        print("Report Saved Successfully.")
+
+    def save_claimed(self, report_id, owner, claimed_date, color, size, shape):
+
+        connection = self.connect()
+        cursor = connection.cursor()
+        
+        sql = """
+            INSERT INTO claims
+            (report_id, owner, claimed_date, color, size, shape)
+            VALUES
+            (%s, %s, %s, %s, %s, %s)
+        """
+        values = (report_id, owner, claimed_date, color, size, shape)
+
+        cursor.execute(sql, values)
+
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+
+        print("Claimed Saved Successfully.")
+
+    def load_claims(self):
+
+        connection = self.connect()
+        cursor = connection.cursor(dictionary=True)
+
+        cursor.execute("SELECT * FROM claims")
+
+        data = cursor.fetchall()
+
+        cursor.close()
+        connection.close()
+
+        return data
+
+    def update_claim_status(self, report_id, status):
+        connection = self.connect()
+        cursor = connection.cursor()
+
+        sql = """
+            UPDATE claims
+            SET status = %s
+            WHERE report_id = %s        
+        """
+        cursor.execute(sql, (status, report_id))
+
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+
+        print("Claim Updated Successfully.")    
 
 # import os
 # import time
