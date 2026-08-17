@@ -3,4 +3,6 @@ from datetime import datetime
 
 db = Data_Management()
 
-db.save_claimed(4, "Alcanara, Lyka", datetime.now(), "Black", "Small", "Rectangle")
+data = db.find_item_id("Wallet", "Black", "Small", "Rectangle")["data"]["report_id"]
+
+print(data) 

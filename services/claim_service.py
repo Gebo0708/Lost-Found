@@ -32,11 +32,11 @@ class ClaimService:
             return adj_validation
 
         #Check Item Status if Claimed or Not
-        item_stat = self.check_claim_status(item)
+        item_stat = self.validate.check_claim_status(item)
 
         if item_stat["valid"]:
         #Verification
-            verify = self.verify_claim(item, owner, date_claim, color, size, shape)
+            verify = self.validate.verify_claim(item, owner, date_claim, color, size, shape)
 
             if verify["valid"]:
                 return self.approve_claim(item, owner)
@@ -54,21 +54,19 @@ class ClaimService:
         color = color.lower()
         size = size.lower()
         shape = shape.lower()
-        load_item = self.database.load_data()
+
+        report_id = find_item_id(item, color, size, shape)
 
 
-        for key in load_item:
-            #Identifation for item to claim
-            if load_item[key]["item"] == item:
-                if load_item[key]["color"] == color and load_item[key]["size"] == size and load_item[key]["shape"] == shape:
-                    load_item[key]["status"] = True 
-                    load_item[key]["owner"] = owner
-                    load_item[key]["d_return"] = now.strftime("%Y-%m-%d %H:%M:%S") 
-                    self.database.save_item(load_item)
-                    return {
-                        "valid": True,
-                        "message": "The claim is verified waiting for the final approval."
-                    }
+        if report_id["value"]:
+            if self.database.update_status_claim(report_id["data"]["report_id"], "CLAIMED"):
+                self.save_claimed(report_id["data"]["report_id"], owner, claimed_date, color, size, shape)
+                self.update_report_status(report_id["data"]["report_id"], "CLAIMED")
+
+                return {
+                    "valid": True,
+                    "message": "The claim is verified waiting for the final approval."
+                }
 
         return {
                 "valid": False,
@@ -88,29 +86,5 @@ class ClaimService:
             "message": "Claim rejected. The information does not match."
         }
 
-    def check_claim_status(self, item):
-        item_d = self.database.load_data()
     
-        #Validation
-        for key in item_d:
-            if item_d[key]["item"] == item:
-                #Status Validation
-                if item_d[key]["status"] == False:
-                    return {
-                        "valid": True,
-                        "message": "The Item is good. Proceeding."
-                    }
-
-                else:
-                    return {
-                        "valid": False,
-                        "message": "The Item is already been claimed."
-
-                    }
-    
-        return {
-                "valid": False,
-                "message": "The Item cannot be found. Try again."
-            }
-
 

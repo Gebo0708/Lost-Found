@@ -7,9 +7,10 @@ DATABASE_FILE = "database/items.json"
 class ReportService:
     def __init__(self):
         self.validate = ValidationService()
+        self.db = Data_Management()
 
     def report_lost_item_service(self, item, founder, date_found, color, size, shape):
-
+        print(date_found)
         item_validation = self.validate.validate_item(item)
 
         if not item_validation["valid"]:
@@ -25,8 +26,6 @@ class ReportService:
         if not date_validation["valid"]:
             return date_validation
         
-        ad = Data_Management()
-
         dup_validation = self.validate.check_duplicate(item, founder, date_found)
 
         if not dup_validation["valid"]:
@@ -37,15 +36,10 @@ class ReportService:
         if not detail_validation["valid"]:
             return detail_validation
 
-        ad.save_data(item, date_found, founder, False, color, size, shape, None, None)
+        self.db.save_report(item, founder, date_found, color, size, shape)
         
         return {
             "valid": True,
             "message": "Thank you for returning the item."
         }
                 
-
-    def claim_item_service(self, item, owner, date_claim):
-        c = ClaimService()
-        res = c.claim_item_service(item, owner, date_claim) 
-        return res

@@ -28,7 +28,7 @@ class Data_Management:
         cursor.close()
         connection.close()
 
-        print("Update Successfully.")
+        return
 
     def load_reports(self):
 
@@ -71,7 +71,7 @@ class Data_Management:
         cursor.close()
         connection.close()
 
-        print("Report Saved Successfully.")
+        return
 
     def save_claimed(self, report_id, owner, claimed_date, color, size, shape):
 
@@ -93,7 +93,8 @@ class Data_Management:
         cursor.close()
         connection.close()
 
-        print("Claimed Saved Successfully.")
+        return
+
 
     def load_claims(self):
 
@@ -109,23 +110,125 @@ class Data_Management:
 
         return data
 
+    # def update_claim_status(self, report_id, status):
+    #     connection = self.connect()
+    #     cursor = connection.cursor()
+
+    #     sql = """
+    #         UPDATE claims
+    #         SET status = %s
+    #         WHERE report_id = %s        
+    #     """
+    #     cursor.execute(sql, (status, report_id))
+
+    #     connection.commit()
+
+    #     cursor.close()
+    #     connection.close()
+
+    #     print("Claim Updated Successfully.") 
+
+    def find_duplicate_report(self, item, name, date):
+        connection = self.connect()
+        cursor = connection.cursor()
+
+        sql = """
+            SELECT * FROM reports
+            WHERE item = %s
+            AND founder = %s
+            AND date_found = %s
+        """   
+        cursor.execute(sql, (item, name, date))
+
+        existed = bool(cursor.fetchone())
+
+        if existed:
+            return True
+        
+        return False
+
     def update_claim_status(self, report_id, status):
         connection = self.connect()
         cursor = connection.cursor()
 
         sql = """
-            UPDATE claims
-            SET status = %s
-            WHERE report_id = %s        
+            UPDATE claims 
+            status = %s,
+            WHERE 
+            report_id = %s
         """
-        cursor.execute(sql, (status, report_id))
+        try:
+            cursor.execute(sql, (status, report_id))
+            connection.commit()
 
-        connection.commit()
+            return cursor.rowcount() > 0
+        
+        except Exception as e:
+            connection.rollback()
+
+            return False
+        
+        finally:
+            cursor.close()
+            connection.close()
+
+    def find_item_id(self, item, color, size, shape):
+        connection = self.connect()
+        cursor = connection.cursor(dictionary=True)
+
+        sql = """
+            SELECT report_id 
+            FROM reports
+            WHERE item = %s AND
+            color = %s AND
+            size = %s AND
+            shape = %s AND
+            status = "AVAILABLE"
+        """
+
+        cursor.execute(sql, (item, color, size, shape))
+
+        find = bool(cursor.fetchone())
+      
 
         cursor.close()
         connection.close()
 
-        print("Claim Updated Successfully.")    
+        if find:
+            return self.return_report_id(item, color, size, shape)
+
+        return {
+            "value": False,
+            "data": None
+        }
+
+    def return_report_id(self, item, color, size, shape):
+        connection = self.connect()
+        cursor = connection.cursor(dictionary=True)
+
+        sql = """
+            SELECT report_id 
+            FROM reports
+            WHERE item = %s AND
+            color = %s AND
+            size = %s AND
+            shape = %s AND
+            status = "AVAILABLE"
+        """
+
+        cursor.execute(sql, (item, color, size, shape))
+
+        data = cursor.fetchone()
+      
+
+        cursor.close()
+        connection.close()
+
+        return {
+            "value": True,
+            "data": data
+        }
+
 
 # import os
 # import time

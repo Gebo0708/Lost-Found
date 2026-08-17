@@ -57,16 +57,39 @@ class ValidationService:
 
     def check_duplicate(self, item, name, date):
         ad = Data_Management()
-        data = ad.load_data()
-
-        for key in data:
-            if key == item and data[key]["founder"] == name and data[key]["date_found"] == date:
-                return {
-                    "valid": False,
-                    "message": "Item Already Reported."
-                }
+        
+        if ad.find_duplicate_report(item, name, date):
+            return {
+                "valid": False,
+                "message": "Item Already Reported."
+            }
 
         return {
                 "valid": True,
                 "message": "Reported Successfully"
             }    
+
+    def check_claim_status(self, item):
+        item_d = self.database.load_reports()
+    
+        #Validation
+        for key in item_d:
+            if item_d[key]["item"] == item:
+                #Status Validation
+                if item_d[key]["status"] == "AVAILABLE":
+                    return {
+                        "valid": True,
+                        "message": "The Item is good. Proceeding."
+                    }
+
+                else:
+                    return {
+                        "valid": False,
+                        "message": "The Item is already been claimed."
+
+                    }
+    
+        return {
+                "valid": False,
+                "message": "The Item cannot be found. Try again."
+            }
