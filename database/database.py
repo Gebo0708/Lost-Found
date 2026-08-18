@@ -153,7 +153,7 @@ class Data_Management:
 
         sql = """
             UPDATE claims 
-            status = %s,
+            SET status = %s
             WHERE 
             report_id = %s
         """
@@ -161,7 +161,7 @@ class Data_Management:
             cursor.execute(sql, (status, report_id))
             connection.commit()
 
-            return cursor.rowcount() > 0
+            return cursor.rowcount > 0
         
         except Exception as e:
             connection.rollback()
@@ -199,7 +199,8 @@ class Data_Management:
 
         return {
             "value": False,
-            "data": None
+            "data": None,
+            "message": "Item cannot be found."
         }
 
     def return_report_id(self, item, color, size, shape):
@@ -229,7 +230,24 @@ class Data_Management:
             "data": data
         }
 
+    def check_status(self, report_id):
+        connection = self.connect()
+        cursor = connection.cursor()
 
+        sql = """
+            SELECT * FROM reports
+            WHERE report_id = %s AND
+            status = "AVAILABLE"
+        """
+
+        cursor.execute(sql, (report_id,))
+
+        is_available = cursor.fetchone()
+
+        cursor.close()
+        connection.close()
+
+        return bool(is_available)
 # import os
 # import time
 # from datetime import datetime

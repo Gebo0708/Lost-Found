@@ -31,42 +31,41 @@ class ClaimService:
         if not adj_validation["valid"]:
             return adj_validation
 
-        #Check Item Status if Claimed or Not
-        item_stat = self.validate.check_claim_status(item)
+        get_report_id = self.database.find_item_id(item, color, size, shape)
+   
+        if get_report_id["value"]:
+            #Check Item Status if Claimed or Not
+            item_stat = self.validate.check_claim_status(get_report_id["data"]["report_id"])
+            self.database.save_claimed(get_report_id["data"]["report_id"], owner, date_claim, color, size, shape)
+            if item_stat["valid"]:
+                #Verification
+                verify = self.verify_claim(get_report_id["data"]["report_id"], item, owner, date_claim, color, size, shape)
+                if verify["valid"]:
+                    return self.approve_claim(item, owner)
 
-        if item_stat["valid"]:
-        #Verification
-            verify = self.validate.verify_claim(item, owner, date_claim, color, size, shape)
-
-            if verify["valid"]:
-                return self.approve_claim(item, owner)
-
+                else:
+                    return self.reject_claim()
             else:
-                return self.reject_claim()
-        else:
-            return item_stat
+                return item_stat["message"]
+
+        return get_report_id["message"]
 
     
-    def verify_claim(self, item, owner, date_claim, color, size, shape):
+    def verify_claim(self, report_id, item, owner, date_claim, color, size, shape):
         item = item.lower()
         now = datetime.now()
         owner = owner.title()
         color = color.lower()
         size = size.lower()
         shape = shape.lower()
+     
+        if self.database.update_claim_status(report_id, "CLAIMED"):
+            self.database.update_report_status(report_id, "CLAIMED")
 
-        report_id = find_item_id(item, color, size, shape)
-
-
-        if report_id["value"]:
-            if self.database.update_status_claim(report_id["data"]["report_id"], "CLAIMED"):
-                self.save_claimed(report_id["data"]["report_id"], owner, claimed_date, color, size, shape)
-                self.update_report_status(report_id["data"]["report_id"], "CLAIMED")
-
-                return {
-                    "valid": True,
-                    "message": "The claim is verified waiting for the final approval."
-                }
+            return {
+                "valid": True,
+                "message": "The claim is verified waiting for the final approval."
+            }
 
         return {
                 "valid": False,
